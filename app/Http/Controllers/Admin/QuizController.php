@@ -16,7 +16,14 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::withCount('question')->orderBy('created_at','DESC')->paginate(5);//paginate ucundu admin.quiz.list icindedi
+        $quizzes = Quiz::withCount('question')->orderBy('created_at','DESC');//evvelki halinda asagida olan paginate bunun ardinda idi..burda get ve ya first ile nese bir sonlandirma etmediyimiz ucun ardini yaza bilirik
+        if(request()->get('title')){
+            $quizzes = $quizzes->where('title','LIKE',"%".request()->get('title')."%");//quizler sehifesinde yaradilan formda titleye gore axtarisin neticesi yazilir
+        }
+        if(request()->get('status')){
+             $quizzes = $quizzes->where('status',request()->get('status'));//statusa gore axtarisin neticesi yazlir
+        }
+        $quizzes =$quizzes->paginate(5);//paginate ucundu admin.quiz.list icindedi
         return view('admin.quiz.list',compact('quizzes'));
     }
 

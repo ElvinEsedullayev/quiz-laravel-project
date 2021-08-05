@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
+use Carbon\Carbon;//bu kitabxanani cagirirq ki zamani gunle gostere bilek
 class Quiz extends Model
 {
     use HasFactory;

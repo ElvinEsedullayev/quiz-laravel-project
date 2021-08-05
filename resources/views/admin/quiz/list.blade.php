@@ -4,10 +4,31 @@
     </x-slot>
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">
+             <form method="get" action="">
+            <div class="row">
+              <div class="col-md-2">
+                <input type="text" name="title" value="{{request()->get('title')}}" class="form-control">
+              </div>
+                 <div class="col-md-2">
+                <select name="status" class="form-control" onchange="this.form.submit()">
+                  <option value="">Durum Sec</option>
+                  <option @if(request()->get('status')=='publish') selected @endif  value="publish">Active</option>
+                  <option @if(request()->get('status')=='draft') selected @endif value="draft">Draft</option>
+                  <option @if(request()->get('status')=='passive') selected @endif value="passive">Passive</option>
+                </select>
+              </div>
+              @if(request()->get('title') or request()->get('status'))
+               <div class="col-md-2">
+              <a href="{{route('quizzes.index')}}" class="btn btn-secondary">Temizle</a>
+            </div>
+            @endif
+            </div>
+          </form>
+        <h5 class="card-title" style="float: right;">
       <a href="{{route('quizzes.create')}}" class="btn btn-sm btn-info"><i class="fa fa-plus"></i> Quiz Olustur</a>
           </h5>
       <table class="table table-bordered">
+        
   <thead>
     <tr>
       <th scope="col">Quiz</th>
@@ -52,7 +73,8 @@
   </tbody>
  
 </table>
- {{$quizzes->links()}}{{--paginate ucundu quizcontrollerde index metodunda cagrilib--}}
+ {{$quizzes->withQueryString()->links()}}{{--paginate ucundu quizcontrollerde index metodunda cagrilib--}}
+ {{--withQueryString ona gore yazdiq ki,meselen axtaris edende ikinci sehifeye qeder coxdusa melumat ikinci sehifeye gedende axtaris linki deyisilirdi,sadece ikinci sehife gedis linki yazilirdi --}}
        </div>
     </div>
 </x-app-layout>
