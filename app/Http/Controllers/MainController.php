@@ -24,4 +24,9 @@ class MainController extends Controller
         $quiz=Quiz::whereSlug($slug)->withCount('question')->first() ?? abort(404,'Bele bir quiz tapilmadi');
         return view('quiz_detail',compact('quiz'));
     }
+
+    public function result(Request $request,$slug)
+    {
+        return $request->post();
+    }
 }

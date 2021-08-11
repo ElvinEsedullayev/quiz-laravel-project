@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             userSeeder::class,
             quizSeeder::class,
             questionSeeder::class,
+            AnswerSeeder::class,
         ]);
         //factory(User::class,10)->create();  10 dene factori ile veri yukle
     }
