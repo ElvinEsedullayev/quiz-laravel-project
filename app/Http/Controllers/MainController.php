@@ -9,11 +9,17 @@ use App\Models\Result;//yazdigimiz modeli elave edirik
 
 class MainController extends Controller
 {
+
+
+ ####################################--dasboard sehifesi--#################################################
+    
     public function dashboard()
     {
         $quizzes= Quiz::where('status','publish')->withCount('question')->paginate(5);
         return view('dashboard',compact('quizzes'));
     }
+
+     ####################################--dasboard sehifesinde suallari gosterir--#################################################
 
     public function quiz($slug)
     {
@@ -21,16 +27,25 @@ class MainController extends Controller
         return view('quiz',compact('quiz'));
     }
 
+     ####################################--detail sehifesinde gedir--#################################################
+
+
     public function quiz_detail($slug)
     {
-        $quiz=Quiz::whereSlug($slug)->withCount('question')->first() ?? abort(404,'Bele bir quiz tapilmadi');
+        $quiz=Quiz::whereSlug($slug)->with('my_result','results')->withCount('question')->first() ?? abort(404,'Bele bir quiz tapilmadi');
+        //my_result ve results quiz modelinden result modeline baglanti ile yaradilib ,burda istifade olunur,question da hemcinin
         return view('quiz_detail',compact('quiz'));
     }
+
+     ####################################--question sehifesine gedir--#################################################
 
     public function result(Request $request,$slug)
     {
         $quiz=Quiz::with('question')->whereSlug($slug)->first() ?? abort(404,'Bele bir quiz bulunamadi');
        // dd($quiz,$request->post());
+       if($quiz->my_result){
+           abort(404,'Siz artiq imtahanda istirak etmisiniz');
+       }
        $correct=0;
         foreach ($quiz->question as $questions) {
             //echo $questions->id.'-'.$questions->answer.'/'.'<br>';//sualin id si ve sualin cvbni gosterir
