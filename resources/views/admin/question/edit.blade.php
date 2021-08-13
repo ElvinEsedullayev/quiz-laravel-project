@@ -63,12 +63,12 @@
                    <div class="col-md-6">
                  <div class="form-group">`
                 <label for="">Dogru Cavab</label>
-                <select name="answer" id="" class="form-control">
-                  <option @if($question->answer==='answer1') selected @endif value="answer1">Cavab 1</option>
-                  <option @if($question->answer==='answer2') selected @endif value="answer2">Cavab 2</option>
-                  <option @if($question->answer==='answer3') selected @endif value="answer3">Cavab 3</option>
-                  <option @if($question->answer==='answer4') selected @endif value="answer4">Cavab 4</option>
-                  <option @if($question->answer==='answer5') selected @endif value="answer5">Cavab 5</option>
+                <select name="correct_answer" id="" class="form-control">
+                  <option @if($question->correct_answer==='answer1') selected @endif value="answer1">Cavab 1</option>
+                  <option @if($question->correct_answer==='answer2') selected @endif value="answer2">Cavab 2</option>
+                  <option @if($question->correct_answer==='answer3') selected @endif value="answer3">Cavab 3</option>
+                  <option @if($question->correct_answer==='answer4') selected @endif value="answer4">Cavab 4</option>
+                  <option @if($question->correct_answer==='answer5') selected @endif value="answer5">Cavab 5</option>
                 </select>
                 </div>
               </div>

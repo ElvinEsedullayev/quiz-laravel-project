@@ -57,7 +57,7 @@
                    <div class="col-md-6">
                  <div class="form-group">
                 <label for="">Cavab 2</label>
-                <select name="answer" id="" class="form-control">
+                <select name="correct_answer" id="" class="form-control">
                   <option @if(old('answer1')==='answer1') selected @endif value="answer1">Cavab 1</option>
                   <option @if(old('answer2')==='answer2') selected @endif value="answer2">Cavab 2</option>
                   <option @if(old('answer3')==='answer3') selected @endif value="answer3">Cavab 3</option>

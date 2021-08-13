@@ -40,7 +40,7 @@
       <td>{{$questions->answer3}}</td>
       <td>{{$questions->answer4}}</td>
       <td>{{$questions->answer5}}</td>
-      <td class="text-success">{{substr($questions->answer,-1)}}.cavab</td>
+      <td class="text-success">{{substr($questions->correct_answer,-1)}}.cavab</td>
       <td>
     
         <a href="{{route('questions.edit',[$quiz->id,$questions->id])}}" class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>

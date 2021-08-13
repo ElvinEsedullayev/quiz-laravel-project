@@ -31,7 +31,7 @@ class QuestionCreateRequest extends FormRequest
             'answer3'=>'required|min:1',
             'answer4'=>'required|min:1',
             'answer5'=>'required|min:1',
-            'answer'=>'required|min:1'
+            'correct_answer'=>'required|min:1'
         ];
     }
         public function attributes()
@@ -44,7 +44,7 @@ class QuestionCreateRequest extends FormRequest
             'answer3'=> 'Cavab 3',
             'answer4'=> 'Cavab 4',
             'answer5'=> 'Cavab 5',
-            'answer'=> 'Dogru Cavab'
+            'correct_answer'=> 'Dogru Cavab'
         ];
     }
 }

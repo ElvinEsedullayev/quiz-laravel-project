@@ -10,4 +10,5 @@ class Answer extends Model
     use HasFactory;
     public $timestamps =false;//timestamp istifade etmediyimize gore migrationda burda bagladiq
     protected $fillable=['user_id','question_id','answer'];
+    
 }

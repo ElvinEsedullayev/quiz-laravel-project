@@ -23,7 +23,11 @@ class MainController extends Controller
 
     public function quiz($slug)
     {
-        $quiz=Quiz::whereSlug($slug)->with('question')->first();
+       $quiz=Quiz::whereSlug($slug)->with('question.my_answer')->first() ?? abort(404,'Bele quiz tapilmadi');
+        //main controllerde quiz metodu suallari getirir quiz modelinde yazilan funksiya ile..indide deyirik ki,o suallarnan beraber cvblari da getir ..ona gore question modelinde cavablar modeline baglanti qurduq..bunu da maincontrollerde quiz metodu icinde questin yaninda yaziriq..bu yazi question icinde yazdigim aiqlamadi..hardan geldiyini bilim
+        if($quiz->my_result){
+            return view('quiz_result',compact('quiz'));
+        }
         return view('quiz',compact('quiz'));
     }
 
@@ -58,8 +62,8 @@ class MainController extends Controller
                 'answer'=>$request->post($questions->id)
                 //butun suallara verilen cvblari answer tablosuna yukluyuruk
             ]);
-            echo $questions->answer.'-'.$request->post($questions->id).'<br>';//suallarin cvbi ve post ile gelen suallarin cvbini gosterir
-            if($questions->answer===$request->post($questions->id)){
+            //echo $questions->answer.'-'.$request->post($questions->id).'<br>';//suallarin cvbi ve post ile gelen suallarin cvbini gosterir
+            if($questions->correct_answer===$request->post($questions->id)){
                 $correct+=1;//dogru cavab olduqca 1 ustune gelir
             }
         }
