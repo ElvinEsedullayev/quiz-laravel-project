@@ -16,10 +16,25 @@ class Quiz extends Model
     //protected $guarded=[] hansina veri eklemek istemirim onu yaziriq
     protected $dates=['finished_at'];//difForHumans() istifade etmek ucun yaziriq..manual olaraq create ve update ucun gelir..
 
-    protected $appends=['details'];//yeni sutun yaradirtiq ve istifade etmek ucun yaziriq..getdetailattribute ile
+    protected $appends=['details','my_rank'];//yeni sutun yaradirtiq ve istifade etmek ucun yaziriq..getdetailattribute ile
+
 
     ####################################--yeni tablo yaradiriq gorunmuyen--#################################################
+    //burda buunu ona gore yaratdiq ki,eger imtahanda bizim neticemiz ilk onluqda deyilse bizim de siramisiz gostersin.quiz detail phpde gosterdik
+    public function getMyRankAttribute()
+    {
+        $rank=0;
+        foreach($this->results()->orderByDesc('point')->get() as $result){//resultdan butun pointleri gotrur 
+            $rank+=1;
+            if(auth()->user()->id == $result->user_id){//eger authdan gelen user id ile resultdaki user id eynidirse sirasini gosterir
+                return $rank;
+            }
+        }
+    }
 
+
+
+    ####################################--yeni tablo yaradiriq gorunmuyen--#################################################
     public function getDetailsAttribute()
     {  
         if($this->results()->count()>0){
@@ -39,9 +54,16 @@ class Quiz extends Model
         return $this->hasOne('App\Models\Result')->where('user_id',auth()->user()->id);//hansi userdi onun neticesin gostersin
     }
 
+
+    ####################################--resulta bagli topTen funskiaysi--#################################################
+    public function topTen()
+    {
+        return $this->results()->orderByDesc('point')->take(10);//take limiti evez edir..
+    }
+
+
      ####################################--result(tablosuna baglanti)--#################################################
         //cox veri getirri,imtahana giren butun usaqlarin neticesin
-
         public function results()
         {
             return $this->hasMany('App\Models\Result');
@@ -53,14 +75,12 @@ class Quiz extends Model
     }
 
     ####################################--question(tablosu)--#################################################
-
        public function question()
     {
        return $this->hasMany('App\Models\Question');//question modeline baglanmaq ucun yazildi..questioncontrollorda index metodunda aciqlamasi var
     }
 
     ####################################--slug()--#################################################
-
        public function sluggable(): array//slug sutunu unutmusduq soradan elave etdik.ve ayrica kod yazmamaq ucun bu kitabxanani daxil edirik..elequent sluglable yazib 
     {
         return [

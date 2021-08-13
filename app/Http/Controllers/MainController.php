@@ -32,8 +32,10 @@ class MainController extends Controller
 
     public function quiz_detail($slug)
     {
-        $quiz=Quiz::whereSlug($slug)->with('my_result','results')->withCount('question')->first() ?? abort(404,'Bele bir quiz tapilmadi');
-        //my_result ve results quiz modelinden result modeline baglanti ile yaradilib ,burda istifade olunur,question da hemcinin
+        $quiz=Quiz::whereSlug($slug)->with('my_result','topTen.user')->withCount('question')->first() ?? abort(404,'Bele bir quiz tapilmadi');
+        //my_result ve results quiz modelinden result modeline baglanti ile yaradilib ,burda istifade olunur,question da hemcinin..
+        //results funksiyasini topTenle evez etdik.ele o modelde topten resultsa abglandi
+        //user result tablosunda user modeline baglanma ucun yazilan funksiyanin adidi
         return view('quiz_detail',compact('quiz'));
     }
 
