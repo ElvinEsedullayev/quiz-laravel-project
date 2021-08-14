@@ -46,7 +46,13 @@
       <td>
         @switch($quiz->status)
             @case('publish')
+            @if($quiz->finished_at==null)
                 <span class="badge rounded-pill bg-success">Active</span>
+                @elseif($quiz->finished_at>now())
+                <span class="badge rounded-pill bg-success">Active</span>
+                @else
+                <span class="badge rounded-pill bg-info">Bitib</span>
+                @endif
                 @break
             @case('draft')
                 <span class="badge rounded-pill bg-secondary">Draft</span>
@@ -63,6 +69,7 @@
         {{--sualla yazdigimiz if sorgusudu..yeni eger bir tarix varsa difforhumanla goster yoxsa - bele goster...bu difforhumani quiz modelde yazmisiq --}}
       </td>
       <td>
+        <a href="{{route('quizzes.details.show',$quiz->id)}}" class="btn btn-sm btn-secondary"><i class="fa fa-info-circle"></i></a>
         <a href="{{route('questions.index',$quiz->id)}}" class="btn btn-sm btn-warning"><i class="fa fa-question"></i></a>
         <a href="{{route('quizzes.edit',$quiz->id)}}" class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
         <a href="{{route('quizzes.destroy',$quiz->id)}}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>

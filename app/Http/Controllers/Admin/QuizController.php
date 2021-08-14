@@ -57,7 +57,11 @@ class QuizController extends Controller
      */
     public function show($id)
     {
-        //
+        $quiz=Quiz::with('topTen','results.user')->withCount('question')->find($id) ?? abort(404,'Bele bir quiz tapilmadi');
+        //my_result ve results quiz modelinden result modeline baglanti ile yaradilib ,burda istifade olunur,question da hemcinin..
+        //results funksiyasini topTenle evez etdik.ele o modelde topten resultsa abglandi
+        //user result tablosunda user modeline baglanma ucun yazilan funksiyanin adidi
+        return view('admin.quiz.show',compact('quiz'));
     }
 
     /**
