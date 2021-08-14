@@ -15,15 +15,18 @@ class MainController extends Controller
     
     public function dashboard()
     {
-        $quizzes= Quiz::where('status','publish')->withCount('question')->paginate(5);
-        return view('dashboard',compact('quizzes'));
+        $quizzes= Quiz::where('status','publish')->where(function($query){
+            $query->whereNull('finished_at')->orWhere('finished_at','>',now());
+        })->withCount('question')->paginate(5);
+        $results = auth()->user()->results;
+        return view('dashboard',compact('quizzes','results'));
     }
 
      ####################################--dasboard sehifesinde suallari gosterir--#################################################
 
     public function quiz($slug)
     {
-       $quiz=Quiz::whereSlug($slug)->with('question.my_answer')->first() ?? abort(404,'Bele quiz tapilmadi');
+       $quiz=Quiz::whereSlug($slug)->with('question.my_answer','my_result')->first() ?? abort(404,'Bele quiz tapilmadi');
         //main controllerde quiz metodu suallari getirir quiz modelinde yazilan funksiya ile..indide deyirik ki,o suallarnan beraber cvblari da getir ..ona gore question modelinde cavablar modeline baglanti qurduq..bunu da maincontrollerde quiz metodu icinde questin yaninda yaziriq..bu yazi question icinde yazdigim aiqlamadi..hardan geldiyini bilim
         if($quiz->my_result){
             return view('quiz_result',compact('quiz'));

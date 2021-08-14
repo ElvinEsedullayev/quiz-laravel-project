@@ -4,7 +4,7 @@
     </x-slot>
   <div class="card">
   <div class="card-body">
-         
+            <h3>Bal : <strong>{{$quiz->my_result->point}}</strong></h3>
             <div class="alert alert-info">
               <i class="fas fa-check-circle text-success"></i> Dogru Cavab<br>
               <i class="fa fa-times text-danger"></i>      Sehv Cavab<br>
@@ -16,7 +16,8 @@
             @else
             <i class="fa fa-times text-danger"></i>
             @endif
-              <strong>#{{$loop->iteration}}.{{-- reqem yazir her sualin qarsinda--}} {{$ques->questions}}</strong>
+              <strong>#{{$loop->iteration}}.{{-- reqem yazir her sualin qarsinda--}} {{$ques->questions}}</strong><br>
+              <span>Bu suala istirakcilardan <strong>{{$ques->true_percent}}%</strong> dogru cavab verdi.</span>
               @if($ques->image)
               <img src="{{asset($ques->image)}}" alt="" style="width: 50%;">
               @endif
